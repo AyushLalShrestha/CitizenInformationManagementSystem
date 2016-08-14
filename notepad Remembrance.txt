@@ -1,0 +1,38 @@
+// for Admin // 
+    ArrayList<Admin> getAllAdmin() throws ClassNotFoundException, SQLException;
+
+    int insertAdmin(Admin a) throws ClassNotFoundException, SQLException;
+
+    int updateAdmin(Admin a) throws ClassNotFoundException, SQLException;
+
+    boolean deleteAdmin(String userName) throws ClassNotFoundException, SQLException;
+
+    Admin getByuserNameAdmin(String userName) throws ClassNotFoundException, SQLException;
+
+    ArrayList<Admin> getByAnyAdmin(String str) throws ClassNotFoundException, SQLException;
+
+    // for official viewer //
+    ArrayList<OfficialViewer> getAllOfficialViewer() throws ClassNotFoundException, SQLException;
+
+    int insertOfficialViewer(OfficialViewer o) throws ClassNotFoundException, SQLException;
+
+    int updateOfficialVewer(OfficialViewer o) throws ClassNotFoundException, SQLException;
+
+    boolean deleteOfficialViewer(String userName) throws ClassNotFoundException, SQLException;
+
+    OfficialViewer getByuserNameOfficialViewer(String userName) throws ClassNotFoundException, SQLException;
+
+    ArrayList<OfficialViewer> getByAnyOfficialViewer(String str) throws ClassNotFoundException, SQLException;
+
+    // For Citizen
+    ArrayList<Citizen> getAllCitizen() throws ClassNotFoundException, SQLException;
+
+    int insertCitizen(Citizen c) throws ClassNotFoundException, SQLException;
+
+    int updateCitizen(Citizen c) throws ClassNotFoundException, SQLException;
+
+    boolean deleteCitizen(String userName) throws ClassNotFoundException, SQLException;
+
+    Citizen getByuserNameCitizen(String userName) throws ClassNotFoundException, SQLException;
+
+    ArrayList<Citizen> getByAnyCitizen(String str) throws ClassNotFoundException, SQLException;

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CIMS Home</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+   </head>
+   <div class="container"> 
+       <style>
+           body {
+               background: url("assets/images/header-background.jpg");
+               color: whitesmoke;
+          } 
+           
+       </style>
+   <body >
+       <h2>Welcome to the Home-Page (Temporary)</h2>
+        <h1><font color="silver">Citizen Information Management System</font></h1>
+        </br><input  type="button" class="btn btn-primary"  id="adminLogin" value="Login as Administrator">  
+        <input  type="button" class="btn btn-primary"  id="citizenLogin" value="Login as Citizen">  
+        <input  type="button" class="btn btn-primary"  id="officialLogin" value="Login as Official Viewer"></br>
+        </br><input  type="button" class="btn btn-default"  id="test" value="test ajax"></br>
+        </br><input  type="button" class="btn btn-success"  id="testJSON" value="test getJSON"></br>
+       
+       <script>
+            $(document).on("ready", function () {
+                alert("jQuery is ready");
+                $("#adminLogin").on("click", function () {
+                    location.href = "adminLogin.jsp";
+                    });
+
+                $("#citizenLogin").on("click", function () {
+                    location.href = "citizenLogin.jsp";
+                });
+
+                $("#officialLogin").on("click", function () {
+                    location.href = "officialLogin.jsp";
+                });
+
+                $("#test").on("click", function () {
+                    $.get("http://localhost:8080/CitizenInformationManagementSystem/api/officialviewer/index", function (data) {
+                        if (data === "tokenblahblah1123123") {
+                            alert(data + " was successfully sent as a token");
+                        } else {
+                            alert("Ajax was unsuccessful");
+                        }
+                    });
+                });
+
+
+                 $("#testJSON").on("click", function () {
+                    $.get("http://localhost:8080/CitizenInformationManagementSystem/api/admin/index2", function (data) {
+                       alert("1. "+data[0].fullName +"  "+"2. "+data[1].fullName);
+                    });
+                });
+
+            });
+
+        </script> 
+    </body>
+    </div>
+
+
+</html>

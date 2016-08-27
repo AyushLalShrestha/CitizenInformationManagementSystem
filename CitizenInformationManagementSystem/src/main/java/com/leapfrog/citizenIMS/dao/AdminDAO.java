@@ -12,5 +12,6 @@ public interface AdminDAO {
     ArrayList<Citizen> getAllCitizen() throws ClassNotFoundException, SQLException;
 
     Citizen getByCitizenId(String citizenId) throws ClassNotFoundException, SQLException;
-
+    
+    int addCitizen(Citizen citizen) throws ClassNotFoundException, SQLException; 
 }

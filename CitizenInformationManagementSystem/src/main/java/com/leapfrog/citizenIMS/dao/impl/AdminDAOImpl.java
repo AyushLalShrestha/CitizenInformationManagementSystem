@@ -101,4 +101,35 @@ public class AdminDAOImpl implements AdminDAO {
         return adminList;
     }
 
+    @Override
+    public int addCitizen(Citizen citizen) throws ClassNotFoundException, SQLException {
+        db.open();
+        String sql = "INSERT INTO citizens (firstName,middleName,lastName,citizenId,DOB,fathersName,mothersName,fathersId,mothersId,bloodGroup,dnaDetails,permanentAddress,contactNo,workDetails,healthDetails,educationDetails, criminalDetails,userName, password, viewPassword) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement stmt = db.initStatement(sql);
+        stmt.setString(1, citizen.getFirstName());
+        stmt.setString(2, citizen.getMiddleName());
+        stmt.setString(3, citizen.getLastName());
+        stmt.setString(4, citizen.getCitizenId());
+        stmt.setDate(5, citizen.getDOB());
+        stmt.setString(6, citizen.getFathersName());
+        stmt.setString(7, citizen.getMothersName());
+        stmt.setString(8, citizen.getFathersId());
+        stmt.setString(9, citizen.getMothersId());
+        stmt.setString(10, citizen.getBloodGroup());
+        stmt.setString(11, citizen.getDnaDetails());
+        stmt.setString(12, citizen.getPermanentAddress());
+        stmt.setString(13, citizen.getContactNo());
+        stmt.setString(14, citizen.getWorkDetails());
+        stmt.setString(15, citizen.getHealthDetails());
+        stmt.setString(16, citizen.getEducationDetails());
+        stmt.setString(17, citizen.getCriminalDetails());
+        stmt.setString(18, citizen.getUserName());
+        stmt.setString(19, citizen.getPassword());
+        stmt.setString(20, citizen.getViewPassword());
+        int rs = stmt.executeUpdate();
+
+        db.close();
+        return rs;
+    }
+
 }

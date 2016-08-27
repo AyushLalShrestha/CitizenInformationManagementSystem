@@ -5,7 +5,7 @@ import com.leapfrog.citizenIMS.dao.impl.AdminDAOImpl;
 import com.leapfrog.citizenIMS.dbutil.DbConnection;
 import com.leapfrog.citizenIMS.entity.Admin;
 import com.leapfrog.citizenIMS.entity.Citizen;
-import com.leapfrog.citizenIMS.entity.OfficialViewer;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -63,23 +63,62 @@ public class AdminAPIController {
     @Path(value = "getcitizen/{citizenId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Citizen givescitizen(@PathParam("citizenId") String citizenId, @QueryParam("access_token") String token) throws ClassNotFoundException, SQLException {
-       if(token.equals("adminAccountU902Gas84S51f9t7SMHBVqTNzcFqZL5h")){
-        DbConnection db = new DbConnection();
-        AdminDAO admin = new AdminDAOImpl();
-        Citizen c = admin.getByCitizenId(citizenId);
-        return c;
-       } else 
-           return null;
+        if (token.equals("adminAccountU902Gas84S51f9t7SMHBVqTNzcFqZL5h")) {
+            DbConnection db = new DbConnection();
+            AdminDAO admin = new AdminDAOImpl();
+            Citizen c = admin.getByCitizenId(citizenId);
+            return c;
+        } else {
+            return null;
+        }
     }
 
     @GET
     @Path(value = "getallcitizens")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Citizen> giveallcitizen() throws ClassNotFoundException, SQLException {
+    public ArrayList<Citizen> giveallcitizen(@QueryParam("access_token") String token) throws ClassNotFoundException, SQLException {
+        if (token.equals("adminAccountU902Gas84S51f9t7SMHBVqTNzcFqZL5h")) {
         ArrayList<Citizen> citizenList = new ArrayList<>();
         AdminDAO admin = new AdminDAOImpl();
         citizenList = admin.getAllCitizen();
         return citizenList;
-
+        }
+        return null;
     }
+
+    @POST
+    @Path(value = "insertcitizen")
+    @Produces(value = "text/plain")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String insertCitizen(@FormParam("firstName") String firstName, @FormParam("middleName") String middleName, @FormParam("lastName") String lastName, @FormParam("citizenId") String citizenId, @FormParam("DOB") Date DOB, @FormParam("fathersName") String fathersName, @FormParam("mothersName") String mothersName, @FormParam("fathersId") String fathersId, @FormParam("mothersId") String mothersId, @FormParam("bloodGroup") String bloodGroup, @FormParam("dnaDetails") String dnaDetails, @FormParam("permanentAddress") String permanentAddress, @FormParam("contactNo") String contactNo, @FormParam("workDetails") String workDetails, @FormParam("healthDetails") String healthDetails, @FormParam("educationDetails") String educationDetails, @FormParam("criminalDetails") String criminalDetails, @FormParam("userName") String userName, @FormParam("password") String password, @FormParam("viewPassword") String viewPassword) throws ClassNotFoundException, SQLException {
+        AdminDAO adminDAO = new AdminDAOImpl();
+        Citizen c = new Citizen();
+        c.setBloodGroup(bloodGroup);
+        c.setCitizenId(citizenId);
+        c.setContactNo(contactNo);
+        c.setCriminalDetails(criminalDetails);
+        c.setDOB(DOB);
+        c.setDnaDetails(dnaDetails);
+        c.setEducationDetails(educationDetails);
+        c.setFathersId(fathersId);
+        c.setFathersName(fathersName);
+        c.setFirstName(firstName);
+        c.setHealthDetails(healthDetails);
+        c.setLastName(lastName);
+        c.setMiddleName(middleName);
+        c.setMothersId(mothersId);
+        c.setMothersName(mothersName);
+        c.setPassword(password);
+        c.setPermanentAddress(permanentAddress);
+        c.setUserName(userName);
+        c.setViewPassword(viewPassword);
+        c.setWorkDetails(workDetails);
+        if((adminDAO.addCitizen(c)) > 0) {
+            return "Inserted";
+        } 
+            
+       return "Not successful";
+        
+    }
+
 }

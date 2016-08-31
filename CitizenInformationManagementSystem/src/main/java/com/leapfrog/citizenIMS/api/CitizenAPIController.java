@@ -3,7 +3,6 @@ package com.leapfrog.citizenIMS.api;
 
 import com.leapfrog.citizenIMS.dao.AdminDAO;
 import com.leapfrog.citizenIMS.dao.impl.AdminDAOImpl;
-import com.leapfrog.citizenIMS.entity.Admin;
 import com.leapfrog.citizenIMS.entity.Citizen;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -55,12 +54,12 @@ import javax.ws.rs.core.MediaType;
 
         for (Citizen c : citizenList) {
             if (c.getUserName().equalsIgnoreCase(userName) && c.getViewPassword().equalsIgnoreCase(viewPassword)) {
+                c.setPassword("Fuck It");
                 return c;
             }
         }
         return null;
     }
-    
     
     
 }

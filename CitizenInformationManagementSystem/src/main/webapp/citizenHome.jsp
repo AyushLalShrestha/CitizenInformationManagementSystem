@@ -23,6 +23,7 @@
             <% String token = request.getParameter("access_token");%>
             <h5><i><div id="token_print"><%=token%></div> </i> was sent as a Token.</h5>  
             <a href="javascript:void(0)" class="btn btn-success" id="viewCitizen"><span class="glyphicon glyphicon-eye-open"> Search & View a Citizen</span></a>
+             <a href="index.html" class="btn btn-danger"><span class="glyphicon glyphicon-backward"> LogOut to Index</span></a>
             </br></br>
             <div id="searchCitizen" style="display:none">
                 <form  id="viewCitizen-form" name="viewCitizen-form" method="post">
@@ -35,14 +36,12 @@
                     <input type="password" name="viewPassword" id="viewPassword"  required="required" placeholder="Citizen's account's view Password" class="form-control"/>
                 </div>
                 <button type="submit" id="submitForm" class="btn btn-info"><span class="glyphicon glyphicon-search"> Search and View</span></button>
-                <a href="index.html" class="btn btn-danger"><span class="glyphicon glyphicon-backward"> LogOut to Index</span></a>
-
             </form>
             </br>
 
             <div id="output">
                 <div class="alert"> Any Outputs will be displayed here.  </div>
-            </div>
+          </div>
     </div>
 </div>
 
@@ -54,8 +53,8 @@
 
             $("#submitForm").on("click", function () {
                 $.post("http://localhost:8080/CitizenInformationManagementSystem/api/citizen/getcitizen/", $("#viewCitizen-form").serialize(), function (data) {
-                    var str = "Name : " + data.firstName + " " + data.lastName + "\n\
-                " + "</br>Permanent Address : " + data.permanentAddress + "\n\
+                    var str = "<h4>Name : " + data.firstName + " " + data.lastName + "</h4>\n\
+                " + "Permanent Address : " + data.permanentAddress + "\n\
                 " + "</br>Citizen's ID : " + data.citizenId + "\n\
                 " + "</br>Education Details : " + data.educationDetails + "\n\
                 " + "</br>Work Details : " + data.workDetails + "\n\

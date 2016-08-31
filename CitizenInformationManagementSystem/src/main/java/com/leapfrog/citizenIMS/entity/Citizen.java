@@ -193,7 +193,13 @@ public class Citizen {
     public void setDOB(Date DOB) {
         this.DOB = DOB;
     }
-       
+
+    @Override
+    public String toString() {
+        return firstName+middleName+lastName+citizenId+fathersName+ mothersName+fathersId+mothersId+bloodGroup+dnaDetails+permanentAddress+contactNo+ workDetails+healthDetails+educationDetails+criminalDetails+userName+password+viewPassword+DOB;
+    }
+
+    
     
     
     

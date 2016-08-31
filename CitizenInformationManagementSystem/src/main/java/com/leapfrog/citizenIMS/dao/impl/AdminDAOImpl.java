@@ -4,6 +4,7 @@ import com.leapfrog.citizenIMS.dao.AdminDAO;
 import com.leapfrog.citizenIMS.dbutil.DbConnection;
 import com.leapfrog.citizenIMS.entity.Admin;
 import com.leapfrog.citizenIMS.entity.Citizen;
+import com.leapfrog.citizenIMS.entity.OfficialViewer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -129,6 +130,67 @@ public class AdminDAOImpl implements AdminDAO {
         int rs = stmt.executeUpdate();
 
         db.close();
+        return rs;
+    }
+
+    @Override
+    public int editCitizen(Citizen citizen) throws ClassNotFoundException, SQLException {
+        db.open();
+        String sql = "UPDATE citizens SET firstName=?,middleName=?,lastName=?,DOB=?,fathersName=?,mothersName=?,fathersId=?,mothersId=?,bloodGroup=?,dnaDetails=?,permanentAddress=?,contactNo=?,workDetails=?,healthDetails=?,educationDetails=?, criminalDetails=?, password=?, viewPassword=? WHERE citizenId=? and userName=? ";
+        PreparedStatement stmt = db.initStatement(sql);
+        stmt.setString(1, citizen.getFirstName());
+        stmt.setString(2, citizen.getMiddleName());
+        stmt.setString(3, citizen.getLastName());
+        stmt.setDate(4, citizen.getDOB());
+        stmt.setString(5, citizen.getFathersName());
+        stmt.setString(6, citizen.getMothersName());
+        stmt.setString(7, citizen.getFathersId());
+        stmt.setString(8, citizen.getMothersId());
+        stmt.setString(9, citizen.getBloodGroup());
+        stmt.setString(10, citizen.getDnaDetails());
+        stmt.setString(11, citizen.getPermanentAddress());
+        stmt.setString(12, citizen.getContactNo());
+        stmt.setString(13, citizen.getWorkDetails());
+        stmt.setString(14, citizen.getHealthDetails());
+        stmt.setString(15, citizen.getEducationDetails());
+        stmt.setString(16, citizen.getCriminalDetails());
+        stmt.setString(17, citizen.getPassword());
+        stmt.setString(18, citizen.getViewPassword());
+        stmt.setString(19, citizen.getCitizenId());
+        stmt.setString(20, citizen.getUserName());
+        int rs = stmt.executeUpdate();
+
+        db.close();
+        return rs;
+    }
+
+    @Override
+    public ArrayList<OfficialViewer> getAllOfficialViewer() throws ClassNotFoundException, SQLException {
+        ArrayList<OfficialViewer> ovList = new ArrayList<>();
+        db.open();
+        String sql = "SELECT * from officialviewer";
+        PreparedStatement stmt = db.initStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            OfficialViewer ov = new OfficialViewer();
+            ov.setViewerName(rs.getString("viewerName"));
+            ov.setUserName(rs.getString("userName"));
+            ov.setPassword(rs.getString("password"));
+            ov.setViewerType(rs.getString("viewerType"));
+            ovList.add(ov);
+
+        }
+        db.close();
+        return ovList;
+    }
+
+    @Override
+    public int deleteCitizen(String citizenId) throws ClassNotFoundException, SQLException {
+        db.open();
+        String sql= "DELETE FROM citizens WHERE citizenId=?";
+        PreparedStatement stmt = db.initStatement(sql);
+        stmt.setString(1, citizenId);
+        int rs = stmt.executeUpdate();
         return rs;
     }
 

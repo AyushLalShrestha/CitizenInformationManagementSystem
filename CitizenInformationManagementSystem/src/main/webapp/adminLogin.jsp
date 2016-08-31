@@ -38,7 +38,8 @@
                 $("#submitForm").on("click", function () {
                     $.post("http://localhost:8080/CitizenInformationManagementSystem/api/admin/loginadmin", $("#login-form").serialize(), function (data) {
                         if (data !== "null") {
-                            location.href = "adminHome.jsp?access_token=" + data;
+                           location.href = "adminHome.jsp?access_token=" + data;
+                          
                         } else {
                             $("#userName").val("");
                             $("#password").val("");

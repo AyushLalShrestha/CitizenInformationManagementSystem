@@ -317,7 +317,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="closeIndividualCitizen" class="btn btn-block" data-dismiss="modal">Close</button>
+                            <button type="button" id="closeIndividualCitizen" class="btn btn-block" data-dismiss="modal">Done</button>
                         </div>
                     </div>
                 </div>

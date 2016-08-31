@@ -65,6 +65,42 @@
                 </div>
             </div>
 
+            	  <!-- Modal 6 Citizen Details modal -->
+            <div style="color: black" class="modal fade" id="citizenIndividual" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel"><div id="citizenIndividualTitle"></div></h4>
+                        </div>
+                        <div class="modal-body" style="font-size: 17px">
+                            <label>Full Name : </label><span> </span><div id="fullNameInd" style="display: inline"></div></br>
+                            <label>Date of Birth :</label><span> </span><div id="DOBInd" style="display: inline"></div> </br>
+                            <label>Citizen ID :</label><span> </span><div id="citizenIdInd" style="display: inline"></div></br>
+                            <label>Contact No. :</label><span> </span><div id="contactInd" style="display: inline"></div></br>
+                            <label>Permanent Address :</label><span> </span><div id="addressInd" style="display: inline"></div> </br>
+                            <label>Blood-Group :</label><span> </span><div id="bloodGroupInd" style="display: inline"></div> </br>
+                            <label>Father's Name :</label><span> </span><div id="fathersNameInd" style="display: inline"></div>
+                            ,<label>ID</label> :<span> </span><div id="fathersIdInd" style="display: inline"></div></br>
+                            <label>Mother's Name :</label><span> </span><div id="mothersNameInd" style="display: inline"></div>
+                            ,<label>ID</label> :<span> </span><div id="mothersIdInd" style="display: inline"></div></br>
+                            <label>Work Details :</label><span> </span><div id="workDetailsInd" style="display: inline"></div></br>
+                            <label>Education Details :</label><span> </span><div id="educationDetailsInd" style="display: inline"></div></br>
+                            <label>Health Details :</label><span> </span><div id="healthDetailsInd" style="display: inline"></div></br>
+                            <label>DNA Details :</label><span> </span><div id="dnaDetailsInd" style="display: inline"></div></br>
+                            <label>Criminal Details :</label><span> </span><div id="criminalDetailsInd" style="display: inline"></div></br>
+                            <label>Username :</label><span> </span><div id="usernameInd" style="display: inline"></div></br>
+                            <label>View Password :</label><span> </span><div id="viewPasswordInd" style="display: inline"></div></br>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeIndividualCitizen" class="btn btn-block" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
             <script>
                 $(document).on("ready", function () {
                     var token = $("#token_print").html();
@@ -91,85 +127,153 @@
                         });
                     });
 
-                    $("#viewCitizens").on("click", function () {
+                  
+          $("#viewCitizens").on("click", function () {
                         $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/admin/getallcitizens", {access_token: token}, function (data) {
 
                             var $tbl = $("#citizen-table");
                             $('#citizen-table tbody > tr').remove();
-                               var $tr1 = $("<tr></tr>");
+                            var $tr1 = $("<tr></tr>");
 
-                                $tr1.append("<th>First Name</th>");
-                                $tr1.append("<th>DOB</th>");
-                                $tr1.append("<th>Permanent Address</th>");
-                                $tr1.append("<th>Citizen ID</th>");
-                                $tr1.append("<th>Father's Name</th>");
-                                $tr1.append("<th>Username</th>");
-                                $tr1.append("<th>View Password</th>");
-                                $tr1.append("<th>Work Details</th>");
+                            $tr1.append("<th>Full Name</th>");
+                            $tr1.append("<th>DOB</th>");
+                            $tr1.append("<th>Address</th>");
+                            $tr1.append("<th>Citizen ID</th>");
+                            $tr1.append("<th>Father's Name</th>");
+                            $tr1.append("<th>Contact</th>");
+                            $tr1.append("<th>Work Details</th>");
+                           
+						$tbl.append($tr1);
 
 
-                                $tbl.append($tr1);
-                            
-                            
                             for (var i = 0; i < data.length; i++) {
                                 var $tr = $("<tr></tr>");
 
-                                $tr.append("<td>" + data[i].firstName + "</td>");
+                                $tr.append("<td>" + data[i].firstName + " " + data[i].lastName + "</td>");
                                 $tr.append("<td>" + data[i].DOB + "</td>");
                                 $tr.append("<td>" + data[i].permanentAddress + "</td>");
-                                $tr.append("<td>" + data[i].citizenId + "</td>");
+                                //$tr.append("<td>" + data[i].citizenId + "</td>");
+                                var l = $('<td><a href="javascript:void(0)" class="viewIndividualCitizen" data="' + data[i].citizenId + '">' + data[i].citizenId + '</a></td>');
+                                $tr.append(l);
                                 $tr.append("<td>" + data[i].fathersName + "</td>");
-                                $tr.append("<td>" + data[i].userName + "</td>");
-                                $tr.append("<td>" + data[i].viewPassword + "</td>");
+                                $tr.append("<td>" + data[i].contactNo + "</td>");
                                 $tr.append("<td>" + data[i].workDetails + "</td>");
-
-
+                                // var r = $('<button type="button" class="btn btn-success btn-sm edit-citizen" data="' + data[i].citizenId + '"><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-danger btn-sm delete-citizen" data="' + data[i].citizenId + '"><span class="glyphicon glyphicon-trash"></span></button>');
+                             
                                 $tbl.append($tr);
                             }
 
+                            $(".viewIndividualCitizen").on("click", function () {
+                                var citizenId = $(this).attr("data");
+                                $.get("http://localhost:8080/CitizenInformationManagementSystem/api/admin/getcitizen/" + citizenId, {access_token: token}, function (data) {
+                                    $("#fullNameInd").html(data.firstName + " " + data.middleName + " " + data.lastName);
+                                    $("#DOBInd").html(data.DOB);
+                                    $("#citizenIdInd").html(data.citizenId);
+                                    $("#contactInd").html(data.contactNo);
+                                    $("#fathersNameInd").html(data.fathersName);
+                                    $("#workDetailsInd").html(data.workDetails);
+                                    $("#addressInd").html(data.permanentAddress);
+                                    $("#bloodGroupInd").html(data.bloodGroup);
+                                    $("#fathersIdInd").html(data.fathersId);
+                                    $("#mothersNameInd").html(data.mothersName);
+                                    $("#mothersIdInd").html(data.mothersId);
+                                    $("#educationDetailsInd").html(data.educationDetails);
+                                    $("#healthDetailsInd").html(data.healthDetails);
+                                    $("#dnaDetailsInd").html(data.dnaDetails);
+                                    $("#criminalDetailsInd").html(data.criminalDetails);
+                                    $("#usernameInd").html(data.userName);
+                                    $("#viewPasswordInd").html(data.viewPassword);
+                                    $("#citizenIndividualTitle").html(data.citizenId + " : " + data.firstName + " " + data.lastName);
+                                });
+
+                                $("#citizens").modal("hide");
+                                $("#citizenIndividual").modal("show");
+                            });
+
+                           
+
                         });
                         $("#citizens").modal("show");
+
+
                     });
+
 
                        $("#searchIt").on("click", function () {
                         var searchByAny = $("#searchByAny").val();
-                       $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/admin/searchbyany", {keyword : searchByAny, access_token : token}, function (data) {
-                                                   var $tbl = $("#citizen-table");
+                        $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/admin/searchbyany", {keyword: searchByAny, access_token: token}, function (data) {
+							var $tbl = $("#citizen-table");
                             $('#citizen-table tbody > tr').remove();
                             var $tr1 = $("<tr></tr>");
 
-                            $tr1.append("<th>First Name</th>");
+                            $tr1.append("<th>Full Name</th>");
                             $tr1.append("<th>DOB</th>");
-                            $tr1.append("<th>Permanent Address</th>");
+                            $tr1.append("<th>Address</th>");
                             $tr1.append("<th>Citizen ID</th>");
                             $tr1.append("<th>Father's Name</th>");
-                            $tr1.append("<th>Username</th>");
-                            $tr1.append("<th>View Password</th>");
+                            $tr1.append("<th>Contact</th>");
                             $tr1.append("<th>Work Details</th>");
-
-
+                           
                             $tbl.append($tr1);
 
 
                             for (var i = 0; i < data.length; i++) {
                                 var $tr = $("<tr></tr>");
 
-                                $tr.append("<td>" + data[i].firstName + "</td>");
+                                $tr.append("<td>" + data[i].firstName + " " + data[i].lastName + "</td>");
                                 $tr.append("<td>" + data[i].DOB + "</td>");
                                 $tr.append("<td>" + data[i].permanentAddress + "</td>");
-                                $tr.append("<td>" + data[i].citizenId + "</td>");
+                                //$tr.append("<td>" + data[i].citizenId + "</td>");
+                                var l = $('<td><a href="javascript:void(0)" class="viewIndividualCitizen" data="' + data[i].citizenId + '">' + data[i].citizenId + '</a></td>');
+                                $tr.append(l);
                                 $tr.append("<td>" + data[i].fathersName + "</td>");
-                                $tr.append("<td>" + data[i].userName + "</td>");
-                                $tr.append("<td>" + data[i].viewPassword + "</td>");
+                                $tr.append("<td>" + data[i].contactNo + "</td>");
                                 $tr.append("<td>" + data[i].workDetails + "</td>");
-
-
+                             
                                 $tbl.append($tr);
                             }
-   
-                        });
-                    });
 
+                            $(".viewIndividualCitizen").on("click", function () {
+                                var citizenId = $(this).attr("data");
+                                $.get("http://localhost:8080/CitizenInformationManagementSystem/api/admin/getcitizen/" + citizenId, {access_token: token}, function (data) {
+                                    $("#fullNameInd").html(data.firstName + " " + data.middleName + " " + data.lastName);
+                                    $("#DOBInd").html(data.DOB);
+                                    $("#citizenIdInd").html(data.citizenId);
+                                    $("#contactInd").html(data.contactNo);
+                                    $("#fathersNameInd").html(data.fathersName);
+                                    $("#workDetailsInd").html(data.workDetails);
+                                    $("#addressInd").html(data.permanentAddress);
+                                    $("#bloodGroupInd").html(data.bloodGroup);
+                                    $("#fathersIdInd").html(data.fathersId);
+                                    $("#mothersNameInd").html(data.mothersName);
+                                    $("#mothersIdInd").html(data.mothersId);
+                                    $("#educationDetailsInd").html(data.educationDetails);
+                                    $("#healthDetailsInd").html(data.healthDetails);
+                                    $("#dnaDetailsInd").html(data.dnaDetails);
+                                    $("#criminalDetailsInd").html(data.criminalDetails);
+                                    $("#usernameInd").html(data.userName);
+                                    $("#viewPasswordInd").html(data.viewPassword);
+                                    $("#citizenIndividualTitle").html(data.citizenId + " : " + data.firstName + " " + data.lastName);
+                                });
+
+                                $("#citizens").modal("hide");
+                                $("#citizenIndividual").modal("show");
+                            });
+
+                            
+
+                           
+    
+						});
+                    });					
+					
+					
+					
+					
+$("#closeIndividualCitizen").on("click", function () {
+                        $("#citizenIndividual").modal("hide");
+                        $("#citizens").modal("show");
+                    });
 
                 });
 

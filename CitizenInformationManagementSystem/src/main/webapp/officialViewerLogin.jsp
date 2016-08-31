@@ -11,6 +11,13 @@
         <link href="assets/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
         <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
     </head>
+    <style>
+        body {
+            background: url("assets/images/glow2.jpg");
+              color: whitesmoke;
+        } 
+
+    </style>
     <body>
         <div class="container">
             <h1>This is the Login Page for Official-Viewer</h1>

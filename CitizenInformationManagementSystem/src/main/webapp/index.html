@@ -3,21 +3,56 @@
     <head>
         <title>CIMS Home</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="assets/js/jquery.min.js" type="text/javascript"></script>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
         <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="assets/js/jquery.min.js" type="text/javascript"></script>
-   </head>
-   <div class="container"> 
-       <style>
-           body {
-               background: url("assets/images/header-background.jpg");
-               color: whitesmoke;
-          } 
-           
-       </style>
-   <body >
-       <h2>Welcome to the Home-Page (Temporary)</h2>
+        
+    </head>
+
+    <style>
+        body {
+            background: url("assets/images/glow2.jpg");
+            color: whitesmoke;
+        } 
+
+    </style>
+    <body >
+        <div class="container">
+        
+            
+
+
+<!-- Modal 1 About the site -->
+<div   class="modal fade bs-example-modal-lg" id="myModal" style="color: black" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel" style="color: #1b6d85"><i>About the Site</i></h3>
+                                </div>
+                            <div class="modal-body">
+                                <div class="info" id="about-paragraph">
+                                    <h4 style="color: #255625">The Website was primarily developed to have a computerized and well-organized Citizen Information Management System. Here are the 3 main user Login types : 
+                                    </h4>    
+                                    <ul type="circle">
+                                        <li><h4>Admin :</h4> Has the right to not only view and search any citizen from the database but also can manage them, for eg. Edit the Citizen details, add-delete official-viewer accounts and has full privelege to the databases.</li>
+                                        <li><h4>Official Viewers :</h4> An Official-Viewer can view any Citizen's details but will not be able to make any changes to them. eg. for this type of account holders are Police, Hospitals, government offices etc.</li>
+                                        <li><h4>Citizen :</h4> General public can login to this account. If they want to view the details of any other citizens, then they must know their citizen ID and the view password related to that specific(destination) account.</li>
+                                    </ul>
+                                         </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Got It</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+        <h2>Welcome to the Home-Page</h2>
         <h1><font color="silver">Citizen Information Management System</font></h1>
         </br><input  type="button" class="btn btn-primary"  id="adminLogin" value="Login as Administrator">  
         <input  type="button" class="btn btn-primary"  id="citizenLogin" value="Login as Citizen">  
@@ -25,27 +60,17 @@
         </br><input  type="button" class="btn btn-default"  id="test" value="test ajax"> 
         <input  type="button" class="btn btn-success"  id="testJSON" value="test getJSON"></br>
         </br><a href="javascript:void(0)" class="btn btn-info"  id="about" >About the Site</a>
-      
-        <div class="info" id="about-paragraph" style="display:none">
-            <h3><b><i>About the Website</i></b></h3>
-            <h4>The website was primarily developed to have a computerized and well-organized Citizen Information Management System. Here are the 3 main user Login types : 
-            </h4>    <ul type="circle">
-                    <li>Admin : Has the right to not only view and search any citizen from the database but also can manage them, for eg. Edit the Citizen details, add-delete official-viewer accounts and has full privelege to the databases.</li>
-                    <li>Official Viewers : An Official-Viewer can view any Citizen's details but will not be able to make any changes to them. eg. for this type of account holders are Police, Hospitals, government offices etc.</li>
-                    <li>Citizen : General public can login to this account. If they want to view the details of any other citizens, then they must know their citizen ID and the view password related to that specific(destination) account.</li>
-                </ul>
 
-            
-            
-            
-             </div>
-        
-        
+
+
+
+
+
         <script>
             $(document).on("ready", function () {
                 $("#adminLogin").on("click", function () {
                     location.href = "adminLogin.jsp";
-                    });
+                });
 
                 $("#citizenLogin").on("click", function () {
                     location.href = "citizenLogin.jsp";
@@ -66,21 +91,21 @@
                 });
 
 
-                 $("#testJSON").on("click", function () {
+                $("#testJSON").on("click", function () {
                     $.get("http://localhost:8080/CitizenInformationManagementSystem/api/admin/index2", function (data) {
-                       alert("1. "+data[0].fullName +"  "+"2. "+data[1].fullName);
+                        alert("1. " + data[0].fullName + "  " + "2. " + data[1].fullName);
                     });
                 });
-                
-                $("#about").on("click", function(){  
-                   $("#about-paragraph").show(); 
+
+                $("#about").on("click", function () {
+                    $("#myModal").modal('show');
                 });
 
             });
 
         </script> 
     </body>
-    </div>
+</div>
 
 
 </html>

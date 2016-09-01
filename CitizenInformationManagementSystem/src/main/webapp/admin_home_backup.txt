@@ -364,7 +364,7 @@
                             var $tbl = $("#citizen-table");
                             $('#citizen-table tbody > tr').remove();
                             var $tr1 = $("<tr></tr>");
-                            $tr1.append("<th>No.</th>");
+
                             $tr1.append("<th>Full Name</th>");
                             $tr1.append("<th>DOB</th>");
                             $tr1.append("<th>Address</th>");
@@ -379,7 +379,7 @@
 
                             for (var i = 0; i < data.length; i++) {
                                 var $tr = $("<tr></tr>");
-                                $tr.append("<td>" + (i + 1) + "." + "</td>");
+
                                 $tr.append("<td>" + data[i].firstName + " " + data[i].lastName + "</td>");
                                 $tr.append("<td>" + data[i].DOB + "</td>");
                                 $tr.append("<td>" + data[i].permanentAddress + "</td>");
@@ -457,8 +457,16 @@
                                 var citizenId = $(this).attr("data");
                                 $("#delete-citizen-modal-id").html(citizenId);
                                 $("#delete-citizen-modal").modal("show");
-                                
-                             }); 
+                                $("#finally-delete").on("click", function () {
+                                    $.get("http://localhost:8080/CitizenInformationManagementSystem/api/admin/deletecitizen", {citizenId: citizenId, access_token: token}, function (data) {
+                                        $("#delete-citizen-modal").modal("hide");
+                                        $("#citizens").modal("hide");
+                                        $("#output").html(data);
+                                        alert(data);
+
+                                    });
+                                });
+                            });
                         });
                         $("#citizens").modal("show");
 
@@ -481,15 +489,22 @@
                         return false;
                     });
 
-                 
+                    $("#submitEditForm").on("click", function () {
+                        $.post("http://localhost:8080/CitizenInformationManagementSystem/api/admin/updatecitizen", $("#edit-citizen-form").serialize(), function (data) {
+                            alert(data);
+                            $("#edit-citizen").modal("hide");
+                        });
+
+                        return false;
+                    });
 
                     $("#searchIt").on("click", function () {
                         var searchByAny = $("#searchByAny").val();
                         $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/admin/searchbyany", {keyword: searchByAny, access_token: token}, function (data) {
-                            var $tbl = $("#citizen-table");
+                      var $tbl = $("#citizen-table");
                             $('#citizen-table tbody > tr').remove();
                             var $tr1 = $("<tr></tr>");
-                            $tr1.append("<th>No.</th>");
+
                             $tr1.append("<th>Full Name</th>");
                             $tr1.append("<th>DOB</th>");
                             $tr1.append("<th>Address</th>");
@@ -504,7 +519,7 @@
 
                             for (var i = 0; i < data.length; i++) {
                                 var $tr = $("<tr></tr>");
-                                $tr.append("<td>" + (i + 1) + "." + "</td>");
+
                                 $tr.append("<td>" + data[i].firstName + " " + data[i].lastName + "</td>");
                                 $tr.append("<td>" + data[i].DOB + "</td>");
                                 $tr.append("<td>" + data[i].permanentAddress + "</td>");
@@ -578,35 +593,59 @@
                                 $("#edit-citizen").modal("show");
                             });
 
-                         $(".delete-citizen").on("click", function () {
+                            $(".delete-citizen").on("click", function () {
                                 var citizenId = $(this).attr("data");
                                 $("#delete-citizen-modal-id").html(citizenId);
                                 $("#delete-citizen-modal").modal("show");
-                               
-                             }); 
-                         });
-                    });
-
-//---------------------------------------------------
-
-                     $("#finally-delete").on("click", function () {
-                                    $.get("http://localhost:8080/CitizenInformationManagementSystem/api/admin/deletecitizen", {citizenId: $("#delete-citizen-modal-id").html(), access_token: token}, function (data) {
+                                $("#finally-delete").on("click", function () {
+                                    $.get("http://localhost:8080/CitizenInformationManagementSystem/api/admin/deletecitizen", {citizenId: citizenId, access_token: token}, function (data) {
                                         $("#delete-citizen-modal").modal("hide");
                                         $("#citizens").modal("hide");
-                                        alert($("#delete-citizen-modal-id").html()+" : "+data);
+                                        $("#output").html(data);
+                                        alert(data);
+
                                     });
                                 });
-
-                      $("#submitEditForm").on("click", function () {
-                        $.post("http://localhost:8080/CitizenInformationManagementSystem/api/admin/updatecitizen", $("#edit-citizen-form").serialize(), function (data) {
-                            alert(data);
-                            $("#edit-citizen").modal("hide");
-                        });
-
-                        return false;
+                            });   
+    
                     });
-        
-                        $("#viewAdmins").on("click", function () {
+                    });
+
+                    $("#viewOfficialViewers").on("click", function () {
+                        $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/officialviewer/getallofficialviewer", {access_token: token}, function (data) {
+
+                            var $tbl2 = $("#adminsandovs-table");
+                            $('#adminsandovs-table tbody > tr').remove();
+                            var $tr2 = $("<tr></tr>");
+
+                            $tr2.append("<th>Account Holder</th>");
+                            $tr2.append("<th>Username</th>");
+                            $tr2.append("<th>Password</th>");
+                            $tr2.append("<th>Viewer Type</th>");
+
+
+                            $tbl2.append($tr2);
+
+
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr3 = $("<tr></tr>");
+
+                                $tr3.append("<td>" + data[i].viewerName + "</td>");
+                                $tr3.append("<td>" + data[i].userName + "</td>");
+                                $tr3.append("<td>" + data[i].password + "</td>");
+                                $tr3.append("<td>" + data[i].viewerType + "</td>");
+
+
+                                $tbl2.append($tr3);
+                            }
+
+                        });
+                        $("#adminsandovstitle").html("Official-Viewers List");
+                        $("#adminsandovsexit").html("Official Viewers");
+                        $("#adminsandovs").modal("show");
+                    });
+
+                    $("#viewAdmins").on("click", function () {
                         $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/admin/getalladmin", {access_token: token}, function (data) {
 
                             var $tbl2 = $("#adminsandovs-table");
@@ -640,45 +679,9 @@
                         $("#adminsandovs").modal("show");
                     });
 
-
                     $("#closeIndividualCitizen").on("click", function () {
                         $("#citizenIndividual").modal("hide");
                         $("#citizens").modal("show");
-                    });
-
-                   
-                    $("#viewOfficialViewers").on("click", function () {
-                        $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/officialviewer/getallofficialviewer", {access_token: token}, function (data) {
-
-                            var $tbl2 = $("#adminsandovs-table");
-                            $('#adminsandovs-table tbody > tr').remove();
-                            var $tr2 = $("<tr></tr>");
-
-                            $tr2.append("<th>Account Holder</th>");
-                            $tr2.append("<th>Username</th>");
-                            $tr2.append("<th>Password</th>");
-                            $tr2.append("<th>Viewer Type</th>");
-
-
-                            $tbl2.append($tr2);
-
-
-                            for (var i = 0; i < data.length; i++) {
-                                var $tr3 = $("<tr></tr>");
-
-                                $tr3.append("<td>" + data[i].viewerName + "</td>");
-                                $tr3.append("<td>" + data[i].userName + "</td>");
-                                $tr3.append("<td>" + data[i].password + "</td>");
-                                $tr3.append("<td>" + data[i].viewerType + "</td>");
-
-
-                                $tbl2.append($tr3);
-                            }
-
-                        });
-                        $("#adminsandovstitle").html("Official-Viewers List");
-                        $("#adminsandovsexit").html("Official Viewers");
-                        $("#adminsandovs").modal("show");
                     });
 
                 });

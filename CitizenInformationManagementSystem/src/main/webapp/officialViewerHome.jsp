@@ -134,7 +134,7 @@
                             var $tbl = $("#citizen-table");
                             $('#citizen-table tbody > tr').remove();
                             var $tr1 = $("<tr></tr>");
-
+                            $tr1.append("<th>No.</th>");
                             $tr1.append("<th>Full Name</th>");
                             $tr1.append("<th>DOB</th>");
                             $tr1.append("<th>Address</th>");
@@ -148,7 +148,8 @@
 
                             for (var i = 0; i < data.length; i++) {
                                 var $tr = $("<tr></tr>");
-
+                                
+                                $tr.append("<td>" +(i+1)+"." + "</td>");
                                 $tr.append("<td>" + data[i].firstName + " " + data[i].lastName + "</td>");
                                 $tr.append("<td>" + data[i].DOB + "</td>");
                                 $tr.append("<td>" + data[i].permanentAddress + "</td>");
@@ -202,10 +203,11 @@
                        $("#searchIt").on("click", function () {
                         var searchByAny = $("#searchByAny").val();
                         $.getJSON("http://localhost:8080/CitizenInformationManagementSystem/api/admin/searchbyany", {keyword: searchByAny, access_token: token}, function (data) {
-							var $tbl = $("#citizen-table");
+			var $tbl = $("#citizen-table");
                             $('#citizen-table tbody > tr').remove();
                             var $tr1 = $("<tr></tr>");
-
+                            
+                            $tr1.append("<th>No.</th>");
                             $tr1.append("<th>Full Name</th>");
                             $tr1.append("<th>DOB</th>");
                             $tr1.append("<th>Address</th>");
@@ -219,7 +221,8 @@
 
                             for (var i = 0; i < data.length; i++) {
                                 var $tr = $("<tr></tr>");
-
+                                
+                                $tr.append("<td>" +(i+1)+"."+ "</td>");
                                 $tr.append("<td>" + data[i].firstName + " " + data[i].lastName + "</td>");
                                 $tr.append("<td>" + data[i].DOB + "</td>");
                                 $tr.append("<td>" + data[i].permanentAddress + "</td>");

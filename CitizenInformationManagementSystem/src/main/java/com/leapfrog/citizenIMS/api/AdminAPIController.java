@@ -126,10 +126,10 @@ public class AdminAPIController {
     @Path(value = "updatecitizen")
     @Produces(value = "text/plain")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String updateCitizen(@FormParam("firstName") String firstName, @FormParam("middleName") String middleName, @FormParam("lastName") String lastName, @FormParam("citizenId") String citizenId, @FormParam("DOB") Date DOB, @FormParam("fathersName") String fathersName, @FormParam("mothersName") String mothersName, @FormParam("fathersId") String fathersId, @FormParam("mothersId") String mothersId, @FormParam("bloodGroup") String bloodGroup, @FormParam("dnaDetails") String dnaDetails, @FormParam("permanentAddress") String permanentAddress, @FormParam("contactNo") String contactNo, @FormParam("workDetails") String workDetails, @FormParam("healthDetails") String healthDetails, @FormParam("educationDetails") String educationDetails, @FormParam("criminalDetails") String criminalDetails, @FormParam("userName") String userName, @FormParam("password") String password, @FormParam("viewPassword") String viewPassword) throws ClassNotFoundException, SQLException {
+    public String updateCitizen(@QueryParam("access_token") String token ,@FormParam("firstName") String firstName, @FormParam("middleName") String middleName, @FormParam("lastName") String lastName, @FormParam("citizenId") String citizenId, @FormParam("DOB") Date DOB, @FormParam("fathersName") String fathersName, @FormParam("mothersName") String mothersName, @FormParam("fathersId") String fathersId, @FormParam("mothersId") String mothersId, @FormParam("bloodGroup") String bloodGroup, @FormParam("dnaDetails") String dnaDetails, @FormParam("permanentAddress") String permanentAddress, @FormParam("contactNo") String contactNo, @FormParam("workDetails") String workDetails, @FormParam("healthDetails") String healthDetails, @FormParam("educationDetails") String educationDetails, @FormParam("criminalDetails") String criminalDetails, @FormParam("userName") String userName, @FormParam("password") String password, @FormParam("viewPassword") String viewPassword) throws ClassNotFoundException, SQLException {
         AdminDAO adminDAO = new AdminDAOImpl();
-        Citizen c = new Citizen();
-        c.setBloodGroup(bloodGroup);
+       Citizen c = new Citizen();
+       c.setBloodGroup(bloodGroup);
         c.setCitizenId(citizenId);
         c.setContactNo(contactNo);
         c.setCriminalDetails(criminalDetails);
@@ -154,7 +154,7 @@ public class AdminAPIController {
         } 
             
        return "Not successful";
-        
+       
     }
     
     @GET

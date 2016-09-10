@@ -176,7 +176,7 @@
                                     </div>
                                     <div class="form-group form-inline">
                                         <label>Citizen ID</label>
-                                        <input type="text" id="editCitizenId" name="citizenId" required="required" class="form-control"/>
+                                        <input type="text" readonly id="editCitizenId" name="citizenId" required="required" class="form-control"/>
                                         <label>DOB</label>
                                         <input type="date" id="editDOB" name="DOB" required="required" class="form-control"/>
                                     </div>
@@ -226,7 +226,7 @@
 
                                     <div class="form-group form-inline">
                                         <label>Username</label>
-                                        <input type="text" id="editUserName" name="userName" required="required" class="form-control"/>
+                                        <input type="text" readonly id="editUserName" name="userName" required="required" class="form-control"/>
                                         <label>Password</label>
                                         <input type="text" id="editPassword" name="password"  required="required" class="form-control"/>
                                         <label>View Password</label>
@@ -250,7 +250,7 @@
                             <h4 class="modal-title" style="color: black">Sure to Delete ?</h4>
                         </div>
                         <div class="modal-body">
-                            <p style="color: black">Are you sure to delete : </p>
+                            <p style="color: black">Are you sure you want to delete : </p>
                             <div id="delete-citizen-modal-id" style="color: crimson"></div>
 
                         </div>
@@ -473,7 +473,7 @@
                     });
 
                     $("#submitForm").on("click", function () {
-                        $.post("http://localhost:8080/CitizenInformationManagementSystem/api/admin/insertcitizen", $("#add-citizen-form").serialize(), function (data) {
+                        $.post("http://localhost:8080/CitizenInformationManagementSystem/api/admin/insertcitizen",  $("#add-citizen-form").serialize(), function (data) {
                             alert(data);
                             $("#add-citizen").modal("hide");
                         });
